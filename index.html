@@ -31,20 +31,20 @@
             background-color: #f5f7fa;
             color: var(--text-color);
             line-height: 1.6;
-            padding: 20px;
+            padding: 10px;
         }
         
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 10px;
             position: relative;
         }
         
         header {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 20px;
+            margin-bottom: 30px;
+            padding: 15px;
             background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
             color: var(--light-text);
             border-radius: var(--border-radius);
@@ -52,29 +52,29 @@
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 10px;
         }
         
         .tagline {
             font-style: italic;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
         }
         
         .collapsible {
             background-color: var(--secondary-color);
             color: var(--primary-color);
             cursor: pointer;
-            padding: 18px;
+            padding: 15px;
             width: 100%;
             border: none;
             text-align: left;
             outline: none;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
             border-radius: var(--border-radius);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             box-shadow: var(--box-shadow);
             transition: var(--transition);
             display: flex;
@@ -100,17 +100,17 @@
         }
         
         .content {
-            padding: 0 18px;
+            padding: 0 15px;
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.2s ease-out;
             background-color: white;
             border-radius: 0 0 var(--border-radius) var(--border-radius);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         .content-inner {
-            padding: 20px;
+            padding: 15px;
         }
         
         ul, ol {
@@ -122,10 +122,18 @@
             margin-bottom: 8px;
         }
         
+        /* Responsive table styles */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 15px 0;
+            -webkit-overflow-scrolling: touch;
+        }
+        
         table {
             width: 100%;
+            min-width: 300px;
             border-collapse: collapse;
-            margin: 15px 0;
         }
         
         table, th, td {
@@ -133,12 +141,49 @@
         }
         
         th, td {
-            padding: 12px;
+            padding: 10px;
             text-align: left;
         }
         
         th {
             background-color: var(--secondary-color);
+        }
+        
+        /* Mobile-specific table styles */
+        @media (max-width: 600px) {
+            .responsive-table {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .responsive-table .table-row {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 10px;
+                border: 1px solid #ddd;
+                border-radius: var(--border-radius);
+                overflow: hidden;
+            }
+            
+            .responsive-table .table-cell {
+                padding: 8px;
+                border: none;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .responsive-table .table-cell:last-child {
+                border-bottom: none;
+            }
+            
+            .responsive-table .table-header {
+                background-color: var(--secondary-color);
+                font-weight: bold;
+            }
+            
+            .responsive-table .day-cell {
+                font-weight: bold;
+                background-color: #f5f7fa;
+            }
         }
         
         .prayer {
@@ -154,23 +199,64 @@
         
         .footer {
             text-align: center;
-            margin-top: 40px;
-            padding: 20px;
+            margin-top: 30px;
+            padding: 15px;
             background-color: var(--secondary-color);
             border-radius: var(--border-radius);
+            font-size: 0.9rem;
         }
         
         @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
             .container {
-                padding: 10px;
+                padding: 5px;
             }
             
             h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             
             .collapsible {
-                font-size: 1.1rem;
+                font-size: 1rem;
+                padding: 12px;
+            }
+            
+            .content-inner {
+                padding: 12px;
+            }
+            
+            .prayer {
+                padding: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            .collapsible {
+                font-size: 0.95rem;
+                padding: 10px;
+            }
+            
+            .collapsible:after {
+                font-size: 1.2rem;
+            }
+            
+            .content-inner {
+                padding: 10px;
+            }
+            
+            ul, ol {
+                padding-left: 15px;
             }
         }
         
@@ -202,11 +288,22 @@
             transform: translate(-50%, -50%);
             background-color: rgba(0, 0, 0, 0.9);
             color: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
             z-index: 2000;
             display: none;
             text-align: center;
+            max-width: 90%;
+        }
+        
+        #copyWarning button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -256,39 +353,70 @@
             </div>
         </div>
         
-        <button class="collapsible">Weekly Schedule</button>
+        <button class="collapsible">Suggested Wkly Schedule</button>
         <div class="content">
             <div class="content-inner">
-                <table>
-                    <tr>
-                        <th>Day</th>
-                        <th>Activities</th>
-                    </tr>
-                    <tr>
-                        <td>Sunday</td>
-                        <td>Motivational/Inspiring/Thought-provoking (M-I-Tp) POST</td>
-                    </tr>
-                    <tr>
-                        <td>Monday</td>
-                        <td>(M-I-Tp) POST</td>
-                    </tr>
-                    <tr>
-                        <td>Tuesday</td>
-                        <td>Open for planning</td>
-                    </tr>
-                    <tr>
-                        <td>Wednesday</td>
-                        <td>Sabbath School group study</td>
-                    </tr>
-                    <tr>
-                        <td>Thursday</td>
-                        <td>Prayer Time & M-I-Tp POST</td>
-                    </tr>
-                    <tr>
-                        <td>Friday</td>
-                        <td>M-I-Tp & Sabbath Mindfulness POST</td>
-                    </tr>
-                </table>
+                <!-- Desktop Table (hidden on small screens) -->
+                <div class="table-container d-none d-md-block">
+                    <table>
+                        <tr>
+                            <th>Day</th>
+                            <th>Activities</th>
+                        </tr>
+                        <tr>
+                            <td>Sunday</td>
+                            <td>Motivational/Inspiring/Thought-provoking (M-I-Tp) POST</td>
+                        </tr>
+                        <tr>
+                            <td>Monday</td>
+                            <td>(M-I-Tp) POST</td>
+                        </tr>
+                        <tr>
+                            <td>Tuesday</td>
+                            <td>Open for planning</td>
+                        </tr>
+                        <tr>
+                            <td>Wednesday</td>
+                            <td>Sabbath School group study</td>
+                        </tr>
+                        <tr>
+                            <td>Thursday</td>
+                            <td>Prayer Time & M-I-Tp POST</td>
+                        </tr>
+                        <tr>
+                            <td>Friday</td>
+                            <td>M-I-Tp & Sabbath Mindfulness POST</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <!-- Mobile-friendly version (visible only on small screens) -->
+                <div class="responsive-table">
+                    <div class="table-row">
+                        <div class="table-cell day-cell">Sunday</div>
+                        <div class="table-cell">Motivational/Inspiring/Thought-provoking (M-I-Tp) POST</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell day-cell">Monday</div>
+                        <div class="table-cell">(M-I-Tp) POST</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell day-cell">Tuesday</div>
+                        <div class="table-cell">Open for planning</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell day-cell">Wednesday</div>
+                        <div class="table-cell">Sabbath School group study</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell day-cell">Thursday</div>
+                        <div class="table-cell">Prayer Time & M-I-Tp POST</div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell day-cell">Friday</div>
+                        <div class="table-cell">M-I-Tp & Sabbath Mindfulness POST</div>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -504,6 +632,24 @@
             if(coll.length > 0) {
                 coll[0].click();
             }
+            
+            // Handle responsive tables
+            function adjustTableDisplay() {
+                var tableContainer = document.querySelector('.table-container');
+                var responsiveTable = document.querySelector('.responsive-table');
+                
+                if (window.innerWidth <= 600) {
+                    if (tableContainer) tableContainer.style.display = 'none';
+                    if (responsiveTable) responsiveTable.style.display = 'block';
+                } else {
+                    if (tableContainer) tableContainer.style.display = 'block';
+                    if (responsiveTable) responsiveTable.style.display = 'none';
+                }
+            }
+            
+            // Initial call and add event listener for resize
+            adjustTableDisplay();
+            window.addEventListener('resize', adjustTableDisplay);
         });
         
         // Additional screenshot protection
