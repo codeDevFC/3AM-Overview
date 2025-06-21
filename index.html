@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3AM Digital Ministry Overview</title>
+    <style>
+        :root {
+            --primary-color: #3a5199;
+            --secondary-color: #f0f4ff;
+            --accent-color: #6d87c7;
+            --text-color: #333;
+            --light-text: #fff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: var(--light-text);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .tagline {
+            font-style: italic;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .collapsible {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            margin-bottom: 10px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .active, .collapsible:hover {
+            background-color: var(--accent-color);
+            color: var(--light-text);
+        }
+        
+        .collapsible:after {
+            content: '\002B';
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+            font-size: 1.5rem;
+        }
+        
+        .active:after {
+            content: "\2212";
+        }
+        
+        .content {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            background-color: white;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            margin-bottom: 20px;
+        }
+        
+        .content-inner {
+            padding: 20px;
+        }
+        
+        ul, ol {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--secondary-color);
+        }
+        
+        .prayer {
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+            color: var(--primary-color);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: var(--secondary-color);
+            border-radius: var(--border-radius);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .collapsible {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Watermark */
+        .watermark {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.07;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 8vw;
+            color: var(--primary-color);
+            transform: rotate(-45deg);
+            font-weight: bold;
+            user-select: none;
+        }
+        
+        /* Warning message */
+        #copyWarning {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 2000;
+            display: none;
+            text-align: center;
+        }
+    </style>
+</head>
+<body onkeydown="return disableCtrlKeyCombination(event);">
+    <div class="watermark">3AM DIGITAL MINISTRY</div>
+    <div id="copyWarning">
+        <h3>Copying Restricted</h3>
+        <p>This content is protected and cannot be copied.</p>
+        <button onclick="document.getElementById('copyWarning').style.display='none'">OK</button>
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1>3AM Digital Ministry</h1>
+            <div class="tagline">"Guiding the Curious, Strengthening the Believers"</div>
+            <p>Spreading the gospel in the digital space through prayer, Bible study, and discipleship</p>
+        </header>
+        
+        <button class="collapsible">Our Mission</button>
+        <div class="content">
+            <div class="content-inner">
+                <p>The 3AM-Digital Ministry is an evangelistic and missionary platform designed to reach:</p>
+                <ul>
+                    <li>Believers seeking deeper biblical understanding</li>
+                    <li>Agnostics, atheists, and non-believers exploring faith</li>
+                    <li>Individuals searching for spiritual guidance ("fumbling in the dark")</li>
+                </ul>
+                <p>We operate as an integrated platform for prayer, Bible study, discipleship, and media resources centered on the Three Angels' Message (Revelation 14:6-12).</p>
+                <p class="prayer"><strong>Our Constant Prayer:</strong> Oh God save a soul to be your disciple, (at least one soul) for your Kingdom every year.</p>
+            </div>
+        </div>
+        
+        <button class="collapsible">Online Presence</button>
+        <div class="content">
+            <div class="content-inner">
+                <ul>
+                    <li><strong>Current website:</strong> <a href="https://3am-beryl.vercel.app/" target="_blank">https://3am-beryl.vercel.app/</a></li>
+                    <li><strong>Future website:</strong> 3amdigitalministry.vercel.app</li>
+                    <li><strong>Social platforms:</strong> WhatsApp, Zoom, YouTube, Facebook, TikTok, Instagram</li>
+                </ul>
+            </div>
+        </div>
+        
+        <button class="collapsible">Weekly Schedule</button>
+        <div class="content">
+            <div class="content-inner">
+                <table>
+                    <tr>
+                        <th>Day</th>
+                        <th>Activities</th>
+                    </tr>
+                    <tr>
+                        <td>Sunday</td>
+                        <td>Motivational/Inspiring/Thought-provoking (M-I-Tp) POST</td>
+                    </tr>
+                    <tr>
+                        <td>Monday</td>
+                        <td>Motivational/Inspiring/Thought-provoking (M-I-Tp) POST</td>
+                    </tr>
+                    <tr>
+                        <td>Tuesday</td>
+                        <td>Open for planning</td>
+                    </tr>
+                    <tr>
+                        <td>Wednesday</td>
+                        <td>Sabbath School group study</td>
+                    </tr>
+                    <tr>
+                        <td>Thursday</td>
+                        <td>Prayer Time & M-I-Tp POST</td>
+                    </tr>
+                    <tr>
+                        <td>Friday</td>
+                        <td>M-I-Tp & Sabbath Mindfulness POST</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <button class="collapsible">Team Organization</button>
+        <div class="content">
+            <div class="content-inner">
+                <h3>Proposed Responsibility Structure</h3>
+                <p>Each team member will take primary responsibility for 2 days per week:</p>
+                <ul>
+                    <li><strong>Team Member 1:</strong> Sunday & Wednesday</li>
+                    <li><strong>Team Member 2:</strong> Monday & Thursday</li>
+                    <li><strong>Team Member 3:</strong> Tuesday & Friday</li>
+                    <li><strong>Team Member 4:</strong> Support role across all days + content planning</li>
+                </ul>
+                
+                <h3>Content Management</h3>
+                <ul>
+                    <li>Create a content calendar 2-4 weeks in advance</li>
+                    <li>Develop "carry forward" content for emergencies or unexpected impediments</li>
+                    <li>Establish a shared cloud folder for storing and organizing ministry materials</li>
+                    <li>Weekly team check-in via Zoom (30 minutes) to coordinate activities</li>
+                </ul>
+            </div>
+        </div>
+        
+        <button class="collapsible">Content Guidelines</button>
+        <div class="content">
+            <div class="content-inner">
+                <h3>Content Creation Standards</h3>
+                <ol>
+                    <li><strong>Biblical Accuracy:</strong> All content must be biblically sound and aligned with the Three Angels' Message.</li>
+                    <li><strong>Accessibility:</strong> Content should be accessible to both believers and non-believers.</li>
+                    <li><strong>Quality:</strong> Maintain high standards for all media (clear audio, high-resolution images, error-free text).</li>
+                    <li><strong>Consistency:</strong> Use consistent branding, tone, and messaging across all platforms.</li>
+                    <li><strong>Relevance:</strong> Address contemporary issues through a biblical lens.</li>
+                </ol>
+                
+                <h3>Post Structure Guidelines</h3>
+                <ul>
+                    <li><strong>Motivational/Inspiring Posts:</strong>
+                        <ul>
+                            <li>Start with a compelling Bible verse or quote</li>
+                            <li>Include a brief (2-3 paragraph) reflection</li>
+                            <li>End with a practical application or question</li>
+                            <li>Add relevant image with ministry branding</li>
+                        </ul>
+                    </li>
+                    <li><strong>Bible Studies:</strong>
+                        <ul>
+                            <li>Clear topic introduction</li>
+                            <li>3-5 key Bible passages with explanations</li>
+                            <li>Discussion questions</li>
+                            <li>Summary of main points</li>
+                            <li>Call to action or application</li>
+                        </ul>
+                    </li>
+                    <li><strong>Prayer Sessions:</strong>
+                        <ul>
+                            <li>Theme for the prayer session</li>
+                            <li>Opening scripture reading</li>
+                            <li>Guided prayer points</li>
+                            <li>Time for personal requests</li>
+                            <li>Closing prayer</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <h3>Platform-Specific Guidelines</h3>
+                <ul>
+                    <li><strong>TikTok:</strong> 30-60 second videos with clear, concise message</li>
+                    <li><strong>Instagram:</strong> High-quality images with thoughtful captions</li>
+                    <li><strong>Facebook:</strong> More detailed posts with opportunity for discussion</li>
+                    <li><strong>YouTube:</strong> Longer-form content like Bible studies and sermons</li>
+                    <li><strong>WhatsApp:</strong> Daily devotionals and announcements</li>
+                </ul>
+            </div>
+        </div>
+        
+        <button class="collapsible">Future Initiatives</button>
+        <div class="content">
+            <div class="content-inner">
+                <ul>
+                    <li>TikTok evangelism series with local field connections</li>
+                    <li>Expert guest speakers for special topics</li>
+                    <li>Seasonal online events (Bible studies, prayer vigils)</li>
+                    <li>Collaborative projects with other ministries</li>
+                </ul>
+            </div>
+        </div>
+        
+        <button class="collapsible">Getting Started</button>
+        <div class="content">
+            <div class="content-inner">
+                <ol>
+                    <li>Confirm individual availability for weekly schedule</li>
+                    <li>Create shared content repository</li>
+                    <li>Develop content guidelines and templates</li>
+                    <li>Set measurable goals for first 3 months</li>
+                    <li>Establish communication protocols</li>
+                </ol>
+            </div>
+        </div>
+        
+        <button class="collapsible">Support Needed</button>
+        <div class="content">
+            <div class="content-inner">
+                <ul>
+                    <li>Prayer support</li>
+                    <li>Content creation</li>
+                    <li>Technical assistance</li>
+                    <li>Community engagement</li>
+                </ul>
+                <p>We welcome your ideas, observations, and commitment to this ministry as we work together to spread the gospel in the digital space.</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 3AM Digital Ministry - Spreading the Three Angels' Message</p>
+        </div>
+    </div>
+    
+    <script>
+        // Disable text selection
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            showCopyWarning();
+            return false;
+        });
+        
+        // Disable Ctrl+C, Ctrl+V, Ctrl+U, Ctrl+S, F12
+        function disableCtrlKeyCombination(e) {
+            var keyCode = e.which || e.keyCode;
+            
+            // List of restricted keys
+            if (e.ctrlKey || e.metaKey) {
+                // Ctrl+C, Ctrl+U, Ctrl+S
+                if (keyCode === 67 || keyCode === 85 || keyCode === 83) {
+                    showCopyWarning();
+                    e.preventDefault();
+                    return false;
+                }
+            }
+            
+            // F12 key
+            if (keyCode === 123) {
+                showCopyWarning();
+                e.preventDefault();
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Show copy warning
+        function showCopyWarning() {
+            document.getElementById('copyWarning').style.display = 'block';
+            setTimeout(function() {
+                document.getElementById('copyWarning').style.display = 'none';
+            }, 3000);
+        }
+        
+        // Disable copy event
+        document.addEventListener('copy', function(e) {
+            showCopyWarning();
+            e.preventDefault();
+            return false;
+        });
+        
+        // Disable cut event
+        document.addEventListener('cut', function(e) {
+            showCopyWarning();
+            e.preventDefault();
+            return false;
+        });
+        
+        // Disable drag events
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // Print screen protection
+        window.addEventListener('keyup', function(e) {
+            if (e.keyCode === 44) {
+                showCopyWarning();
+            }
+        });
+        
+        // Collapsible functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+
+            for (i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    } 
+                });
+            }
+            
+            // Open the first section by default
+            if(coll.length > 0) {
+                coll[0].click();
+            }
+        });
+        
+        // Additional screenshot protection
+        setInterval(function() {
+            var watermarks = document.getElementsByClassName('watermark');
+            for (var i = 0; i < watermarks.length; i++) {
+                var opacity = Math.random() * 0.05 + 0.05;
+                watermarks[i].style.opacity = opacity;
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
